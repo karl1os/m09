@@ -1,0 +1,57 @@
+<?php
+
+    require_once 'loguin.php';
+
+    $usr = isset($_REQUEST['usr']) ? $_REQUEST['usr'] : null;
+    $pass = isset($_REQUEST['pass']) ? $_REQUEST['pass'] : null;
+    $errores = array();
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+        if (testUsuariContrasenya($usr, $pass)) {
+            $errores["usr"] = 'El camp usuari o contrasenya es incorrecte.';
+        }else {
+            session_start();
+            $_SESSION["usuari"] = $usr;
+            header('Location: paguina1.html' );
+        }
+
+    }
+ 
+?>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Practica 6 - Validació amb sesion</title>
+        <link href="estil.css"
+            rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <h1>Inicia sessio</h1>
+                    
+        <form action="autenti.html" method="POST">
+
+                <div>
+
+                    <div class="col-25">
+                    <label for="fname">Usuari:</label>
+                    <input type="text" name="usr" placeholder="Usuari" value="<?php echo $usr ?>"><br>
+                    </div>
+                    <div class="col-25">
+                    <label for="fname">Contrasenya:</label>
+                    <input type="password" name="pass" placeholder="Contrasenya" ><br>
+                    </div>
+                    
+                    <?php if ($errores && isset($errores["usr"])) { ?>
+                        <p style="color:red;"><?php echo $errores["usr"]; ?></p>
+                    <?php } ?>
+                    <input type="submit" value="Accedir"><br><br>
+
+                </div>
+
+        </form>
+
+    </body>
+
+</html>

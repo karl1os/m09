@@ -1,0 +1,49 @@
+<?php
+
+    # comprovem si existeix usuari autentificat, si no es aixi retorna a la paguina d'atentificacio
+    require_once 'loguin.php';
+    session_start();
+    $usr = $_SESSION["usuari"]; 
+    if ($usr == "") {
+        header("Location:autenti.html");
+    }
+
+?>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <title>Practica 6</title>
+   <link href="estil.css"
+      rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    
+
+    <h1>Acces nomes amb login</h1>
+    <p>Has accedit amb l'usuari <b><?php echo $usr;?></b> a la <b>paguina 1</b></p>
+    <form method="get">
+        <a href="paguina1.html">
+            <button type="submit">Paguina 1
+        </a>
+        <a href="paguina2.html">
+            <button type="submit">Paguina 2
+        </a>
+        <a href="paguina3.html">
+            <button type="submit">Paguina 3
+        </a>
+        <?php 
+            if($_GET['logout']==1){
+                session_destroy();
+                header("Location:autenti.html");
+            }
+        ?>
+        <a href="?logout=1">
+            <button type="submit" name="logout" value="1">Tancar sessio</button>
+        </a>
+    </form>
+    
+</body>
+
+</html>
